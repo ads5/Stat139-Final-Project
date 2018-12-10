@@ -85,3 +85,37 @@ for (i in 1:19)
 results <- as.data.frame(results)
 
 rm(anova, model, offense)
+
+#Will Code
+EarlyNBAData = read.csv("2015-2018 NBA Data.csv")
+RecentNBAData = read.csv("2001-2004 NBA Data.csv")
+
+#Simple regression model comparing pace of play
+EarlyModel1 = lm(W ~ Pace, data = EarlyNBAData)
+RecentModel1 = lm(W ~ Pace, data = RecentNBAData)
+summary(EarlyModel1)$coef[2]
+summary(RecentModel1)$coef[2]
+
+#Simple regression model comparing turnover %
+EarlyModel2 = lm(W ~ TOP, data = EarlyNBAData)
+RecentModel2 = lm(W ~ TOP, data = RecentNBAData)
+summary(EarlyModel2)$coef[2]
+summary(RecentModel2)$coef[2]
+
+#Simple regression model comparing three pointers attempted/FG attempted
+EarlyModel3 = lm(W ~ ThreeProp, data = EarlyNBAData)
+RecentModel3 = lm(W ~ ThreeProp, data = RecentNBAData)
+summary(EarlyModel3)$coef[2]
+summary(RecentModel3)$coef[2]
+
+#Simple regression model comparing offensive rebound %
+EarlyModel4 = lm(W ~ ORBP, data = EarlyNBAData)
+RecentModel4 = lm(W ~ ORBP, data = RecentNBAData)
+summary(EarlyModel4)$coef[2]
+summary(RecentModel4)$coef[2]
+
+#Multiple regression model comparing the previous three variables plus offensive rebound %, effective FG %
+EarlyModel5 = lm(W ~ ThreeProp + EffFG + ORBP + TOP, data = EarlyNBAData)
+RecentModel5 = lm(W ~ ThreeProp + EffFG + ORBP + TOP, data = RecentNBAData)
+summary(EarlyModel5)
+summary(RecentModel5)
