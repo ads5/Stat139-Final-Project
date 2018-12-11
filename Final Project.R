@@ -95,36 +95,30 @@ results <- as.data.frame(results)
 
 rm(anova, model, offense)
 
-#Will Code
-EarlyNBAData = read.csv("2015-2018 NBA Data.csv")
-RecentNBAData = read.csv("2001-2004 NBA Data.csv")
+data <- read.csv("NBA Seasons 2000-2018.csv", header=TRUE)
 
-#Simple regression model comparing pace of play
-EarlyModel1 = lm(W ~ Pace, data = EarlyNBAData)
-RecentModel1 = lm(W ~ Pace, data = RecentNBAData)
-summary(EarlyModel1)$coef[2]
-summary(RecentModel1)$coef[2]
+RatingModel <- lm(data$W ~ ORtg + DRtg + NRtg, data = data)
+summary(RatingModel)
 
-#Simple regression model comparing turnover %
-EarlyModel2 = lm(W ~ TOP, data = EarlyNBAData)
-RecentModel2 = lm(W ~ TOP, data = RecentNBAData)
-summary(EarlyModel2)$coef[2]
-summary(RecentModel2)$coef[2]
+#checking linearity assumption
+plot(data$W ~ data$ORtg)
+plot(data$W ~ data$DRtg)
+plot(data$W ~ data$NRtg)
 
-#Simple regression model comparing three pointers attempted/FG attempted
-EarlyModel3 = lm(W ~ ThreeProp, data = EarlyNBAData)
-RecentModel3 = lm(W ~ ThreeProp, data = RecentNBAData)
-summary(EarlyModel3)$coef[2]
-summary(RecentModel3)$coef[2]
+#checking normality
+hist(data$ORtg)
+hist(data$DRtg)
+hist(data$NRtg)
 
-#Simple regression model comparing offensive rebound %
-EarlyModel4 = lm(W ~ ORBP, data = EarlyNBAData)
-RecentModel4 = lm(W ~ ORBP, data = RecentNBAData)
-summary(EarlyModel4)$coef[2]
-summary(RecentModel4)$coef[2]
-
-#Multiple regression model comparing the previous three variables plus offensive rebound %, effective FG %
-EarlyModel5 = lm(W ~ ThreeProp + EffFG + ORBP + TOP, data = EarlyNBAData)
-RecentModel5 = lm(W ~ ThreeProp + EffFG + ORBP + TOP, data = RecentNBAData)
-summary(EarlyModel5)
-summary(RecentModel5)
+#checking for collinearity/highlighting all championship winning teams 
+#possible because all championship teams had unique values for ORtg
+plot(data$ORtg ~ data$DRtg, col=ifelse(data$ORtg %in% c(107.85, 109.15, 
+    110.29, 106.25, 103.18, 108.45, 109.53, 110.11, 111.10, 113.43, 
+    109.51, 110.24, 107.66, 113.43, 111.09, 112.18, 111.80, 116.26, 114.31),
+    "red", "black"), pch=ifelse(data$ORtg %in% c(107.85, 109.15, 110.29, 
+    106.25, 103.18, 108.45, 109.53, 110.11, 111.10, 113.43, 109.51, 110.24,
+    107.66, 113.43, 111.09, 112.18, 111.80, 116.26, 114.31), 8, 1), 
+xlab = "Defensive Rating", ylab = "Offensive Rating", 
+main = "Defensive Rating vs. Offensive Rating")
+abline(v = mean(data$DRtg), col="blue", lwd=1, lty=2)
+abline(h = mean(data$ORtg), col="blue", lwd=1, lty=2)
