@@ -8,8 +8,17 @@ logs <- as.data.frame(logs)
 # Split game logs by team
 teamlogs <- split(logs, logs$TEAM)
 
+#rename variables
+colnames(logs)[9] <- "FGPct"
+colnames(logs)[10] <- "ThreePtMade"
+colnames(logs)[11] <- "ThreePtAtt"
+colnames(logs)[12] <- "ThreePtPct"
+colnames(logs)[15] <- "FtPct"
+colnames(logs)[24] <- "PlusMinus"
+colnames(logs)[25] <- "EffFGPct"
+
 # Create a model stepwise
-model <- lm(logs$X... ~ logs$OREB + logs$FGM + logs$FGA + logs$FG. + logs$X3PM + logs$X3PA + logs$X3P. + logs$FTM + logs$FTA + logs$FT. + logs$DREB + logs$AST + logs$STL + logs$BLK + logs$TOV + logs$PF + logs$EFG., data = logs)
+model <- lm(logs$W ~ logs$OREB + logs$FGM + logs$FGA + logs$FGPct + logs$ThreePtMade + logs$ThreePtAtt + logs$ThreePtPct + logs$FTM + logs$FTA + logs$FtPct + logs$DREB + logs$AST + logs$STL + logs$BLK + logs$TOV + logs$PF + logs$EffFGPct, data = logs)
 step <- step(model)
 summary(step)
 
