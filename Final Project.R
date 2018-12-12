@@ -22,8 +22,49 @@ model <- lm(logs$W ~ logs$OREB + logs$FGM + logs$FGA + logs$FGPct + logs$ThreePt
 step <- step(model)
 summary(step)
 
+#checking for normality of residuals
+qqnorm(resid(step))
+qqline(resid(step))
+
+#checking multicollinearity assumption in the game logs
+plot(logs$FGPct ~ logs$EffFGPct)
+plot(logs$FGPct ~ logs$FGA)
+plot(logs$FGPct ~ logs$FTM)
+plot(logs$FGPct ~ logs$FGM)
+plot(logs$FGPct ~ logs$ThreePtMade)
+plot(logs$FGPct ~ logs$DREB)
+plot(logs$FGPct ~ logs$ThreePtPct)
+plot(logs$STL ~ logs$BLK)
+plot(logs$AST ~ logs$FGM)
+plot(logs$OREB ~ logs$DREB)
+plot(logs$DREB ~ logs$ThreePtPct)
+plot(logs$AST ~ logs$EffFGPct)
+plot(logs$AST ~ logs$FGA)
+plot(logs$AST ~ logs$FTM)
+plot(logs$AST ~ logs$FGM)
+plot(logs$AST ~ logs$ThreePtMade)
+plot(logs$AST ~ logs$TOV)
+plot(logs$PF ~ logs$BLK)
+plot(logs$PF ~ logs$STL)
+plot(logs$PF ~ logs$DREB)
+
 # Check normality assumption
-hist(logs$X..., breaks = 20)
+hist(logs$OREB, breaks = 20)
+hist(logs$FGM, breaks = 20)
+hist(logs$FGA, breaks = 20)
+hist(logs$FGPct, breaks = 20)
+hist(logs$ThreePtMade, breaks = 20)
+hist(logs$ThreePtAtt, breaks = 20)
+hist(logs$FTM, breaks = 20)
+hist(logs$FTA, breaks = 20)
+hist(logs$FtPct, breaks = 20)
+hist(logs$DREB, breaks = 20)
+hist(logs$AST, breaks = 20)
+hist(logs$STL, breaks = 20)
+hist(logs$BLK, breaks = 20)
+hist(logs$TOV, breaks = 20)
+hist(logs$PF, breaks = 20)
+hist(logs$EffFGPct, breaks = 20)
 
 ######
 
