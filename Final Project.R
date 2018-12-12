@@ -2,7 +2,7 @@ getwd()
 setwd("/Users/austin.sechrest/Documents/Junior Fall/Stat 139")
 
 # Load regular season game logs
-logs <- read.csv("reg.csv", header = TRUE)
+logs <- read.csv("NBA 2017-18 Regular Season Game Logs.csv")
 logs <- as.data.frame(logs)
 
 # Split game logs by team
